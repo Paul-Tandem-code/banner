@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Scroll Fade Banner</title>
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* ✅ Creates scroll space WITHOUT breaking sticky */
+  .spacer {
+    height: 1200px;
+  }
+
+  /* ✅ Sticky banner */
+  .banner {
+    position: sticky;
+    top: 0;
+    height: 980px; /* your requested height */
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: opacity 0.2s linear;
+  }
+
+  .image1 {
+    background-image: url('https://tandemcarers.org.au/images/2026%20Election/20260527%20FN%20family%20blur%20full%20width.png');
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .image2 {
+    background-image: url('https://tandemcarers.org.au/images/2026%20Election/20260527%20FN%20family%20unblur%20full%20width.png');
+    opacity: 0;
+    z-index: 2;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- Spacer above (optional) -->
+<div class="spacer"></div>
+
+<div class="banner">
+  <div class="image image1"></div>
+  <div class="image image2"></div>
+</div>
+
+<!-- Spacer below (this drives the scroll fade) -->
+<div class="spacer"></div>
+
+<script>
+window.addEventListener("scroll", function () {
+
+  const banner = document.querySelector(".banner");
+  const img2 = document.querySelector(".image2");
+
+  if (!banner || !img2) return;
+
+  const rect = banner.getBoundingClientRect();
+
+  // Fade while banner scrolls
+  let progress = 1 - (rect.bottom / window.innerHeight);
+
+  // Clamp value
+  progress = Math.max(0, Math.min(progress, 1));
+
+  img2.style.opacity = progress;
+
+});
+</script>
+
+</body>
+</html>
