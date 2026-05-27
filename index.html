@@ -5,19 +5,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Scroll Fade Banner</title>
+<title>Test Banner</title>
 
 <style>
-  html, body {
+  body {
     margin: 0;
-    padding: 0;
     height: 2000px;
   }
 
   .banner {
     position: relative;
     height: 980px;
-    width: 100%;
   }
 
   .banner-inner {
@@ -26,23 +24,18 @@
     left: 0;
     width: 100%;
     height: 980px;
-    overflow: hidden;
   }
 
-  .image {
+  .image1, .image2 {
     position: absolute;
     width: 100%;
     height: 100%;
-    left: 0;
-    top: 0;
     background-size: cover;
     background-position: center;
-    transition: opacity 0.3s ease;
   }
 
   .image1 {
     background-image: url('https://tandemcarers.org.au/images/2026%20Election/20260527%20FN%20family%20blur%20full%20width.png');
-    opacity: 1;
     z-index: 1;
   }
 
@@ -52,22 +45,18 @@
     z-index: 2;
   }
 
-  /* ✅ Fixed overlay image */
-  .overlay-image {
+  .overlay {
     position: absolute;
     top: 50%;
     left: 25%;
     transform: translateY(-50%);
-    z-index: 3;
-    opacity: 0;
-    transition: opacity 0.5s ease;
     width: 40%;
+    opacity: 0;
+    z-index: 3;
   }
 
-  .overlay-image img {
+  .overlay img {
     width: 100%;
-    height: auto;
-    display: block;
   }
 </style>
 </head>
@@ -76,44 +65,26 @@
 
 <div class="banner">
   <div class="banner-inner">
-    <div class="image image1"></div>
-    <div class="image image2"></div>
+    <div class="image1"></div>
+    <div class="image2" id="img2"></div>
 
-    <!-- ✅ FIXED IMAGE TAG -->
-    <div class="overlay-image">
-      <img src="https://tandemcarers.org.au/images/2026%20Election/260527%20In%20the%20picture%20text%20grey%20background.png" alt="Overlay text">
+    <div class="overlay" id="overlay">
+      <img src="https://tandemcarers.org.au/images/2026%20Election/260527%20In%20the%20picture%20text%20grey%20background.png">
     </div>
-
   </div>
 </div>
 
 <script>
 window.addEventListener("scroll", function () {
+  const img2 = document.getElementById("img2");
+  const overlay = document.getElementById("overlay");
 
-  const img2 = document.querySelector(".image2");
-  const overlay = document.querySelector(".overlay-image");
+  const progress = window.scrollY / 1500;
 
-  const scrollTop = window.scrollY;
-  const scrollHeight = document.body.scrollHeight - window.innerHeight;
-
-  let progress = scrollTop / scrollHeight;
-
-  const fadeStart = 0.25;
-  const fadeEnd = 0.75;
-
-  let opacity;
-
-  if (progress < fadeStart) {
-    opacity = 0;
-  } else if (progress > fadeEnd) {
-    opacity = 1;
-  } else {
-    opacity = (progress - fadeStart) / (fadeEnd - fadeStart);
-  }
+  const opacity = Math.min(Math.max((progress - 0.25) / 0.5, 0), 1);
 
   img2.style.opacity = opacity;
   overlay.style.opacity = opacity;
-
 });
 </script>
 
