@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Scroll Fade Banner</title>
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 2000px;
+    font-family: "TWK Lausanne 350", sans-serif;
+  }
+
+  /* Banner container */
+  .banner {
+    position: relative;
+    height: 980px;
+    width: 100%;
+  }
+
+  /* Fixed layer (acts like sticky) */
+  .banner-inner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 980px;
+    overflow: hidden;
+  }
+
+  /* Images */
+  .image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 0.3s ease;
+  }
+
+  .image1 {
+    background-image: url('https://tandemcarers.org.au/images/2026%20Election/20260527%20FN%20family%20blur%20full%20width.png');
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .image2 {
+    background-image: url('https://tandemcarers.org.au/images/2026%20Election/20260527%20FN%20family%20unblur%20full%20width.png');
+    opacity: 0;
+    z-index: 2;
+  }
+
+  /* Text overlay */
+  .overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    transform: translateY(-50%);
+    font-size: 3.2rem;
+    line-height: 1.2;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    max-width: 700px;
+  }
+
+  .line1 {
+    color: #1f91d1;
+    display: block;
+  }
+
+  .line2 {
+    color: #58a658;
+    display: block;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="banner" id="banner">
+  <div class="banner-inner">
+    <div class="image image1"></div>
+    <div class="image image2"></div>
+
+    <div class="overlay-text">
+      <span class="line1">Put all mental health carers</span><br>
+      <span class="line2">in the picture</span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+window.addEventListener("scroll", function () {
+
+  const img2 = document.querySelector(".image2");
+  const text = document.querySelector(".overlay-text");
+
+  const scrollTop = window.scrollY;
+  const scrollHeight = document.body.scrollHeight - window.innerHeight;
+
+  // Total scroll progress (0 → 1)
+  let progress = scrollTop / scrollHeight;
+
+  // Fade timing
+  const fadeStart = 0.25;  // first 25% = no fade
+  const fadeEnd = 0.75;    // fully visible by 75%
+
+  let opacity;
+
+  if (progress < fadeStart) {
+    opacity = 0;
+  } else if (progress > fadeEnd) {
+    opacity = 1;
+  } else {
+    opacity = (progress - fadeStart) / (fadeEnd - fadeStart);
+  }
+
+  // Apply fade to image and text
+  img2.style.opacity = opacity;
+  text.style.opacity = opacity;
+
+});
+</script>
+
+</body>
+</html>
