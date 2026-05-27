@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Scroll Fade Banner</title>
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: sans-serif;
+  }
+
+  /* ✅ Updated height to 980px */
+  .banner {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 980px;
+    overflow: hidden;
+  }
+
+  .image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: opacity 0.3s ease-out;
+  }
+
+  .image1 {
+    background-image: url('https://tandemcarers.org.au/images/2026%20Election/20260527%20FN%20family%20blur%20full%20width.png');
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .image2 {
+    background-image: url('https://tandemcarers.org.au/images/2026%20Election/20260527%20FN%20family%20unblur%20full%20width.png');
+    opacity: 0;
+    z-index: 2;
+  }
+
+  .content {
+    height: 2000px;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="banner">
+  <div class="image image1"></div>
+  <div class="image image2"></div>
+</div>
+
+<div class="content"></div>
+
+<script>
+window.addEventListener("scroll", function () {
+
+  const img2 = document.querySelector(".image2");
+
+  const scrollTop = window.scrollY;
+  const scrollHeight = document.body.scrollHeight - window.innerHeight;
+
+  const progress = Math.min(scrollTop / scrollHeight, 1);
+
+  img2.style.opacity = progress;
+
+});
+</script>
+
+</body>
+</html>
