@@ -14,14 +14,12 @@
     height: 2000px;
   }
 
-  /* Banner container */
   .banner {
     position: relative;
     height: 980px;
     width: 100%;
   }
 
-  /* Fixed (sticky-like) layer */
   .banner-inner {
     position: fixed;
     top: 0;
@@ -31,7 +29,6 @@
     overflow: hidden;
   }
 
-  /* Background images */
   .image {
     position: absolute;
     width: 100%;
@@ -54,3 +51,71 @@
     opacity: 0;
     z-index: 2;
   }
+
+  /* ✅ Fixed overlay image */
+  .overlay-image {
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    transform: translateY(-50%);
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    width: 40%;
+  }
+
+  .overlay-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="banner">
+  <div class="banner-inner">
+    <div class="image image1"></div>
+    <div class="image image2"></div>
+
+    <!-- ✅ FIXED IMAGE TAG -->
+    <div class="overlay-image">
+      <img src="https://tandemcarers.org.au/images/2026%20Election/260527%20In%20the%20picture%20text%20grey%20background.png" alt="Overlay text">
+    </div>
+
+  </div>
+</div>
+
+<script>
+window.addEventListener("scroll", function () {
+
+  const img2 = document.querySelector(".image2");
+  const overlay = document.querySelector(".overlay-image");
+
+  const scrollTop = window.scrollY;
+  const scrollHeight = document.body.scrollHeight - window.innerHeight;
+
+  let progress = scrollTop / scrollHeight;
+
+  const fadeStart = 0.25;
+  const fadeEnd = 0.75;
+
+  let opacity;
+
+  if (progress < fadeStart) {
+    opacity = 0;
+  } else if (progress > fadeEnd) {
+    opacity = 1;
+  } else {
+    opacity = (progress - fadeStart) / (fadeEnd - fadeStart);
+  }
+
+  img2.style.opacity = opacity;
+  overlay.style.opacity = opacity;
+
+});
+</script>
+
+</body>
+</html>
