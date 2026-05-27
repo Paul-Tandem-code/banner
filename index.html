@@ -12,7 +12,6 @@
     margin: 0;
     padding: 0;
     height: 2000px;
-    font-family: "TWK Lausanne 350", sans-serif;
   }
 
   /* Banner container */
@@ -22,7 +21,7 @@
     width: 100%;
   }
 
-  /* Fixed layer (acts like sticky) */
+  /* Fixed (sticky-like) layer */
   .banner-inner {
     position: fixed;
     top: 0;
@@ -32,7 +31,7 @@
     overflow: hidden;
   }
 
-  /* Images */
+  /* Background images */
   .image {
     position: absolute;
     width: 100%;
@@ -55,80 +54,3 @@
     opacity: 0;
     z-index: 2;
   }
-
-  /* Text overlay */
-  .overlay-text {
-    position: absolute;
-    top: 50%;
-    left: 25%;
-    transform: translateY(-50%);
-    font-size: 3.2rem;
-    line-height: 1.2;
-    z-index: 3;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    max-width: 700px;
-  }
-
-  .line1 {
-    color: #1f91d1;
-    display: block;
-  }
-
-  .line2 {
-    color: #58a658;
-    display: block;
-  }
-</style>
-</head>
-
-<body>
-
-<div class="banner" id="banner">
-  <div class="banner-inner">
-    <div class="image image1"></div>
-    <div class="image image2"></div>
-
-    <div class="overlay-text">
-      <span class="line1">Put all mental health carers</span><br>
-      <span class="line2">in the picture</span>
-    </div>
-
-  </div>
-</div>
-
-<script>
-window.addEventListener("scroll", function () {
-
-  const img2 = document.querySelector(".image2");
-  const text = document.querySelector(".overlay-text");
-
-  const scrollTop = window.scrollY;
-  const scrollHeight = document.body.scrollHeight - window.innerHeight;
-
-  // Total scroll progress (0 → 1)
-  let progress = scrollTop / scrollHeight;
-
-  // Fade timing
-  const fadeStart = 0.25;  // first 25% = no fade
-  const fadeEnd = 0.75;    // fully visible by 75%
-
-  let opacity;
-
-  if (progress < fadeStart) {
-    opacity = 0;
-  } else if (progress > fadeEnd) {
-    opacity = 1;
-  } else {
-    opacity = (progress - fadeStart) / (fadeEnd - fadeStart);
-  }
-
-  // Apply fade to image and text
-  img2.style.opacity = opacity;
-  text.style.opacity = opacity;
-
-});
-</script>
-
-</body>
-</html>
