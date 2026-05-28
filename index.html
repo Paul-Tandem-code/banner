@@ -12,11 +12,12 @@
     margin: 0;
   }
 
-  .spacer {
-    height: 1400px;
+  .banner {
+    height: 1800px; /* ✅ controls scroll area */
+    position: relative;
   }
 
-  .banner {
+  .banner-inner {
     position: sticky;
     top: 0;
     height: 980px;
@@ -56,7 +57,6 @@
 
   .overlay img {
     width: 100%;
-    display: block;
   }
 
   @media (max-width: 768px) {
@@ -78,32 +78,37 @@
 
 <body>
 
-<div class="banner">
-  <div class="image1"></div>
-  <div class="image2" id="img2"></div>
+<div class="banner" id="banner">
+  <div class="banner-inner">
+    <div class="image1"></div>
+    <div class="image2" id="img2"></div>
 
-  <div class="overlay" id="overlay">
-    <img src="https://tandemcarers.org.au/images/2026%20Election/260527%20In%20the%20picture%20text%20grey%20background.png">
+    <div class="overlay" id="overlay">
+      <img src="https://tandemcarers.org.au/images/2026%20Election/260527%20In%20the%20picture%20text%20grey%20background.png">
+    </div>
   </div>
 </div>
-
-<div class="spacer"></div>
 
 <script>
 window.addEventListener("scroll", function () {
 
+  const banner = document.getElementById("banner");
   const img2 = document.getElementById("img2");
   const overlay = document.getElementById("overlay");
 
-  const scrollY = window.scrollY;
+  const rect = banner.getBoundingClientRect();
+  const windowHeight = window.innerHeight;
 
-  const fadeDistance = 1200; // slower fade
-  let progress = scrollY / fadeDistance;
+  // ✅ Scroll progress RELATIVE to banner
+  let progress = (windowHeight - rect.top) / (rect.height);
 
-  // ✅ FIXED delay (starts later but still reachable)
-  let raw = Math.min(Math.max((progress - 0.35) / 0.65, 0), 1);
+  // Clamp
+  progress = Math.max(0, Math.min(progress, 1));
 
-  // ✅ Smooth easing
+  // ✅ Delayed fade (feels like 50%)
+  let raw = Math.min(Math.max((progress - 0.5) / 0.5, 0), 1);
+
+  // ✅ Easing
   let eased = raw < 0.5
     ? 2 * raw * raw
     : 1 - Math.pow(-2 * raw + 2, 2) / 2;
