@@ -107,7 +107,7 @@ window.addEventListener("scroll", function () {
   let progress = scrollY / fadeDistance;
 
   // ✅ Delay fade start (first 25%)
-  let opacity = Math.min(Math.max((progress - 0.25) / 0.5, 0), 1);
+  let opacity = Math.min(Math.max((progress - 0.5) / 0.5, 0), 1);
 
   img2.style.opacity = opacity;
   overlay.style.opacity = opacity;
