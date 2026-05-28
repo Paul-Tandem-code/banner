@@ -13,13 +13,11 @@
     height: 2000px;
   }
 
-  /* Banner container */
   .banner {
     position: relative;
     height: 980px;
   }
 
-  /* Fixed layer */
   .banner-inner {
     position: fixed;
     top: 0;
@@ -27,6 +25,9 @@
     width: 100%;
     height: 980px;
     overflow: hidden;
+
+    /* ✅ Allow scrolling anywhere */
+    pointer-events: none;
   }
 
   /* Background images */
@@ -35,7 +36,10 @@
     width: 100%;
     height: 100%;
     background-size: cover;
+
+    /* ✅ Prevent top cropping in RISE */
     background-position: top center;
+
     transition: opacity 0.6s ease;
   }
 
@@ -53,13 +57,17 @@
   /* Overlay image */
   .overlay {
     position: absolute;
-    top: 50%;
+    top: 55%;
     left: 25%;
     transform: translateY(-50%);
     width: 40%;
     opacity: 0;
     z-index: 3;
+
     transition: opacity 0.6s ease, transform 0.6s ease;
+
+    /* ✅ Allow interaction if needed later */
+    pointer-events: auto;
   }
 
   .overlay img {
@@ -91,7 +99,7 @@
 <body>
 
 <div class="banner">
-  <div class="banner-inner">
+  <div class="banner-inner" id="bannerInner">
     <div class="image1"></div>
     <div class="image2" id="img2"></div>
 
@@ -106,18 +114,25 @@ window.addEventListener("scroll", function () {
 
   const img2 = document.getElementById("img2");
   const overlay = document.getElementById("overlay");
+  const bannerInner = document.getElementById("bannerInner");
 
-  // Adjust speed of scroll effect
+  // Control speed of effect
   const progress = window.scrollY / 800;
 
-  // Fade timing: 25% → 75%
+  // Fade between 25% and 75%
   let opacity = Math.min(Math.max((progress - 0.25) / 0.5, 0), 1);
 
+  // Apply fade
   img2.style.opacity = opacity;
   overlay.style.opacity = opacity;
 
-  // Optional subtle lift animation
+  // Subtle upward movement
   overlay.style.transform = `translateY(${ -50 + (opacity * -5) }%)`;
+
+  // ✅ Turn off fixed layer after transition completes
+  if (opacity >= 1) {
+    bannerInner.style.position = "relative";
+  }
 
 });
 </script>
