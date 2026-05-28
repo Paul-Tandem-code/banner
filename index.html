@@ -12,12 +12,10 @@
     margin: 0;
   }
 
-  /* Scroll space */
   .spacer {
     height: 1400px;
   }
 
-  /* Sticky banner */
   .banner {
     position: sticky;
     top: 0;
@@ -25,7 +23,6 @@
     overflow: hidden;
   }
 
-  /* Images */
   .image1, .image2 {
     position: absolute;
     width: 100%;
@@ -46,7 +43,6 @@
     z-index: 2;
   }
 
-  /* Overlay */
   .overlay {
     position: absolute;
     top: 55%;
@@ -63,7 +59,6 @@
     display: block;
   }
 
-  /* Tablet */
   @media (max-width: 768px) {
     .overlay {
       width: 75%;
@@ -71,7 +66,6 @@
     }
   }
 
-  /* Small mobile */
   @media (max-width: 480px) {
     .overlay {
       width: 90%;
@@ -89,7 +83,7 @@
   <div class="image2" id="img2"></div>
 
   <div class="overlay" id="overlay">
-    <img src="https://tandemcarers.org.au/images/2026%20Election/260527%20In%20the%20picture%20text%20grey%20background.png" alt="">
+    <img src="https://tandemcarers.org.au/images/2026%20Election/260527%20In%20the%20picture%20text%20grey%20background.png">
   </div>
 </div>
 
@@ -106,3 +100,21 @@ window.addEventListener("scroll", function () {
   const fadeDistance = 1200; // slower fade
   let progress = scrollY / fadeDistance;
 
+  // ✅ FIXED delay (starts later but still reachable)
+  let raw = Math.min(Math.max((progress - 0.35) / 0.65, 0), 1);
+
+  // ✅ Smooth easing
+  let eased = raw < 0.5
+    ? 2 * raw * raw
+    : 1 - Math.pow(-2 * raw + 2, 2) / 2;
+
+  img2.style.opacity = eased;
+  overlay.style.opacity = eased;
+
+  overlay.style.transform = `translateY(${ -50 + (eased * -5) }%)`;
+
+});
+</script>
+
+</body>
+</html>
