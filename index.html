@@ -12,22 +12,25 @@
     margin: 0;
   }
 
-  .banner {
-    height: 1800px; /* ✅ controls scroll area */
+  /* ✅ This container creates INTERNAL scroll */
+  .scroll-container {
+    height: 2000px;
     position: relative;
   }
 
-  .banner-inner {
+  /* Sticky banner */
+  .banner {
     position: sticky;
     top: 0;
     height: 980px;
     overflow: hidden;
   }
 
+  /* Images */
   .image1, .image2 {
     position: absolute;
     width: 100%;
-    height: 980px;
+    height: 100%;
     background-size: cover;
     background-position: top center;
     transition: opacity 0.3s linear;
@@ -44,6 +47,7 @@
     z-index: 2;
   }
 
+  /* Overlay */
   .overlay {
     position: absolute;
     top: 55%;
@@ -78,8 +82,9 @@
 
 <body>
 
-<div class="banner" id="banner">
-  <div class="banner-inner">
+<div class="scroll-container" id="container">
+
+  <div class="banner" id="banner">
     <div class="image1"></div>
     <div class="image2" id="img2"></div>
 
@@ -87,25 +92,24 @@
       <img src="https://tandemcarers.org.au/images/2026%20Election/260527%20In%20the%20picture%20text%20grey%20background.png">
     </div>
   </div>
+
 </div>
 
 <script>
 window.addEventListener("scroll", function () {
 
-  const banner = document.getElementById("banner");
+  const container = document.getElementById("container");
   const img2 = document.getElementById("img2");
   const overlay = document.getElementById("overlay");
 
-  const rect = banner.getBoundingClientRect();
-  const windowHeight = window.innerHeight;
+  const rect = container.getBoundingClientRect();
 
-  // ✅ Scroll progress RELATIVE to banner
-  let progress = (windowHeight - rect.top) / (rect.height);
+  const totalScroll = container.offsetHeight - window.innerHeight;
 
-  // Clamp
-  progress = Math.max(0, Math.min(progress, 1));
+  // ✅ Scroll progress INSIDE the container
+  let progress = Math.min(Math.max(-rect.top / totalScroll, 0), 1);
 
-  // ✅ Delayed fade (feels like 50%)
+  // ✅ Delay to ~50%
   let raw = Math.min(Math.max((progress - 0.5) / 0.5, 0), 1);
 
   // ✅ Easing
