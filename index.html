@@ -11,12 +11,6 @@
   body {
     margin: 0;
     height: 2000px;
-    overflow-x: hidden;
-  }
-
-  /* ✅ LOCK scroll when active */
-  body.lock-scroll {
-    overflow: hidden;
   }
 
   .banner {
@@ -25,7 +19,7 @@
   }
 
   .banner-inner {
-    position: fixed;
+    position: fixed; /* ✅ Start fixed */
     top: 0;
     left: 0;
     width: 100%;
@@ -88,7 +82,7 @@
 </style>
 </head>
 
-<body class="lock-scroll">
+<body>
 
 <div class="banner">
   <div class="banner-inner" id="bannerInner">
@@ -96,7 +90,7 @@
     <div class="image2" id="img2"></div>
 
     <div class="overlay" id="overlay">
-      <img src="https://tandemcarers.org.au/images/2026%20Election/260527%20In%20the%20picture%20text%20grey%20background.png" alt="">
+      <img src="https://tandemcarers.org.au/images/2026%20Election/260527%20In%20the%20picture%20text%20grey%20background.png">
     </div>
   </div>
 </div>
@@ -106,22 +100,25 @@ window.addEventListener("scroll", function () {
 
   const img2 = document.getElementById("img2");
   const overlay = document.getElementById("overlay");
-  const body = document.body;
+  const bannerInner = document.getElementById("bannerInner");
 
-  // control timing
+  // Controls timing of effect
   const progress = window.scrollY / 800;
 
+  // Fade between 25% → 75%
   let opacity = Math.min(Math.max((progress - 0.25) / 0.5, 0), 1);
 
   img2.style.opacity = opacity;
   overlay.style.opacity = opacity;
+
+  // Subtle lift
   overlay.style.transform = `translateY(${ -50 + (opacity * -5) }%)`;
 
-  // ✅ LOCK / UNLOCK behaviour
-  if (opacity < 1) {
-    body.classList.add("lock-scroll");
+  // ✅ Release banner once animation is complete
+  if (opacity >= 1) {
+    bannerInner.style.position = "relative";
   } else {
-    body.classList.remove("lock-scroll");
+    bannerInner.style.position = "fixed";
   }
 
 });
