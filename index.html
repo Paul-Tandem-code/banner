@@ -11,6 +11,12 @@
   body {
     margin: 0;
     height: 2000px;
+    overflow-x: hidden;
+  }
+
+  /* ✅ LOCK scroll when active */
+  body.lock-scroll {
+    overflow: hidden;
   }
 
   .banner {
@@ -25,21 +31,15 @@
     width: 100%;
     height: 980px;
     overflow: hidden;
-
-    /* ✅ Allow scrolling anywhere */
     pointer-events: none;
   }
 
-  /* Background images */
   .image1, .image2 {
     position: absolute;
     width: 100%;
     height: 100%;
     background-size: cover;
-
-    /* ✅ Prevent top cropping in RISE */
     background-position: top center;
-
     transition: opacity 0.6s ease;
   }
 
@@ -54,7 +54,6 @@
     z-index: 2;
   }
 
-  /* Overlay image */
   .overlay {
     position: absolute;
     top: 55%;
@@ -63,10 +62,7 @@
     width: 40%;
     opacity: 0;
     z-index: 3;
-
     transition: opacity 0.6s ease, transform 0.6s ease;
-
-    /* ✅ Allow interaction if needed later */
     pointer-events: auto;
   }
 
@@ -75,28 +71,24 @@
     display: block;
   }
 
-  /* ✅ Tablet */
   @media (max-width: 768px) {
     .overlay {
       width: 75%;
       left: 12.5%;
-      top: 55%;
     }
   }
 
-  /* ✅ Small mobile */
   @media (max-width: 480px) {
     .overlay {
       width: 90%;
       left: 5%;
-      top: 55%;
     }
   }
 
 </style>
 </head>
 
-<body>
+<body class="lock-scroll">
 
 <div class="banner">
   <div class="banner-inner" id="bannerInner">
@@ -114,24 +106,22 @@ window.addEventListener("scroll", function () {
 
   const img2 = document.getElementById("img2");
   const overlay = document.getElementById("overlay");
-  const bannerInner = document.getElementById("bannerInner");
+  const body = document.body;
 
-  // Control speed of effect
+  // control timing
   const progress = window.scrollY / 800;
 
-  // Fade between 25% and 75%
   let opacity = Math.min(Math.max((progress - 0.25) / 0.5, 0), 1);
 
-  // Apply fade
   img2.style.opacity = opacity;
   overlay.style.opacity = opacity;
-
-  // Subtle upward movement
   overlay.style.transform = `translateY(${ -50 + (opacity * -5) }%)`;
 
-  // ✅ Turn off fixed layer after transition completes
-  if (opacity >= 1) {
-    bannerInner.style.position = "relative";
+  // ✅ LOCK / UNLOCK behaviour
+  if (opacity < 1) {
+    body.classList.add("lock-scroll");
+  } else {
+    body.classList.remove("lock-scroll");
   }
 
 });
@@ -139,4 +129,3 @@ window.addEventListener("scroll", function () {
 
 </body>
 </html>
-``
