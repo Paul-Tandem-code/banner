@@ -5,116 +5,234 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Scroll Fade Banner</title>
+<title>Our Issues</title>
 
 <style>
   body {
     margin: 0;
+    font-family: "TWK Lausanne 350", sans-serif;
   }
 
-  .spacer {
-    height: 1400px;
+  .section-heading {
+    max-width: 900px;
+    margin: 40px auto 10px auto;
+    font-size: 2rem;
+    color: #1f91d1;
+    text-align: left;
   }
 
-  .banner {
-    position: sticky;
-    top: 0;
-    height: 980px;
+  .container {
+    display: flex;
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto 40px auto;
+  }
+
+  .card {
+    width: 33.33%;
+  }
+
+  .image-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
+    cursor: pointer;
+
+    /* ✅ prevents brightness flash */
+    background: #000;
   }
 
-  .image1, .image2 {
+  .image {
     position: absolute;
     width: 100%;
-    height: 980px;
-    background-size: cover;
-    background-position: top center;
-    transition: opacity 0.3s linear;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+
+    /* ✅ smoother + no visual artefacts */
+    backface-visibility: hidden;
+    will-change: opacity;
+
+    transition: opacity 1.8s ease;
   }
 
-  .image1 {
-    background-image: url('https://tandemcarers.org.au/images/2026%20Election/20260527%20FN%20family%20blur%20full%20width.png');
+  .front {
+    opacity: 1;
     z-index: 1;
   }
 
-  .image2 {
-    background-image: url('https://tandemcarers.org.au/images/2026%20Election/20260527%20FN%20family%20unblur%20full%20width.png');
+  .back {
     opacity: 0;
     z-index: 2;
   }
 
-  .overlay {
-    position: absolute;
-    top: 55%;
-    left: 25%;
-    transform: translateY(-50%);
-    width: 40%;
+  /* ✅ staged transition (removes "light-up") */
+  .image-wrapper:hover .front {
     opacity: 0;
-    z-index: 3;
-    transition: opacity 0.3s linear, transform 0.3s ease;
   }
 
-  .overlay img {
-    width: 100%;
-    display: block;
+  .image-wrapper:hover .back {
+    opacity: 1;
+    transition-delay: 0.1s;
+  }
+
+  .button-overlay {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+  }
+
+  .button {
+    padding: 10px 16px;
+    background-color: #1f91d1;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 1.05rem;
+  }
+
+  .text-block {
+    padding-top: 12px;
+    text-align: left;
+  }
+
+  .summary {
+    font-size: 1.1rem;
+    opacity: 0.7;
+    margin-bottom: 6px;
+  }
+
+  .title {
+    font-size: 1.4rem;
+    font-weight: 350;
+    margin-bottom: 10px;
+    color: #1f91d1;
+  }
+
+  .body {
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .body p {
+    margin: 0 0 12px 0;
   }
 
   @media (max-width: 768px) {
-    .overlay {
-      width: 75%;
-      left: 12.5%;
+    .container {
+      flex-direction: column;
+      max-width: 500px;
+    }
+
+    .card {
+      width: 100%;
+    }
+
+    .section-heading {
+      max-width: 500px;
     }
   }
-
-  @media (max-width: 480px) {
-    .overlay {
-      width: 90%;
-      left: 5%;
-    }
-  }
-
 </style>
 </head>
 
 <body>
 
-<div class="banner">
-  <div class="image1"></div>
-  <div class="image2" id="img2"></div>
+<div class="section-heading">Our issues</div>
 
-  <div class="overlay" id="overlay">
-    <img src="https://tandemcarers.org.au/images/2026%20Election/260527%20In%20the%20picture%20text%20grey%20background.png">
+<div class="container">
+
+  <!-- CARD 1 -->
+  <div class="card">
+    <div class="image-wrapper" onclick="handleTap(this)">
+      <img src="https://tandemcarers.org.au/images/2026%20Election/260529%20couple%20blur%20crop%20new.jpg" alt="ADD ALT TEXT HERE" class="image front">
+      <img src="https://tandemcarers.org.au/images/2026%20Election/2600526%20couple%20unblur%20crop.png" alt="ADD ALT TEXT HERE" class="image back">
+
+      <div class="button-overlay">
+        <a href="#" class="button">Learn more</a>
+      </div>
+    </div>
+
+    <div class="text-block">
+      <div class="summary">Identify carers</div>
+      <div class="title">Recognise and respond to growing numbers of carers</div>
+
+      <div class="body">
+        <p>There are more carers than ever. Drought, bushfire, flooding, economic insecurity and housing stress mean more people in our community are experiencing mental health challenges and distress – which means more people are finding themselves in caring roles for the first time.</p>
+
+        <p>The Government must work to identify communities where the need for carer support is growing and build targeted supports that meet the needs of those communities.</p>
+      </div>
+    </div>
   </div>
+
+  <!-- CARD 2 -->
+  <div class="card">
+    <div class="image-wrapper" onclick="handleTap(this)">
+      <img src="https://tandemcarers.org.au/images/2026%20Election/260529%20dog%20couple%20blur%20crop%20new.jpg" alt="ADD ALT TEXT HERE" class="image front">
+      <img src="https://tandemcarers.org.au/images/2026%20Election/260529%20dog%20couple%20unblur%20crop%20new.jpg" alt="ADD ALT TEXT HERE" class="image back">
+
+      <div class="button-overlay">
+        <a href="#" class="button">Learn more</a>
+      </div>
+    </div>
+
+    <div class="text-block">
+      <div class="summary">Support carers</div>
+      <div class="title">Build both integrated and carer-specific services</div>
+
+      <div class="body">
+        <p>Family, carers and supporters of people with mental health challenges need their own supports to address the full diversity of their needs, and not just only within the mental health system. The government must invest in ensuring all health and human services support mental health carers.</p>
+
+        <p>The government must extend funding for Victoria's first-of-a-kind Mental Health and Wellbeing Connect centres and establish new centres where they're most needed.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3 -->
+  <div class="card">
+    <div class="image-wrapper" onclick="handleTap(this)">
+      <img src="https://tandemcarers.org.au/images/2026%20Election/260529%20Gym%20family%20blur%20crop%20new.jpg" alt="ADD ALT TEXT HERE" class="image front">
+      <img src="https://tandemcarers.org.au/images/2026%20Election/260529%20Gym%20family%20unblur%20crop%20new.jpg" alt="ADD ALT TEXT HERE" class="image back">
+
+      <div class="button-overlay">
+        <a href="#" class="button">Learn more</a>
+      </div>
+    </div>
+
+    <div class="text-block">
+      <div class="summary">Involve carers</div>
+      <div class="title">Include mental health carer voices and perspectives in system design and leadership</div>
+
+      <div class="body">
+        <p>So much of mental health care is done by family, carers and supporters, who work hard in our communities to address gaps and harms, and drive positive change – often without compensation or recognition.</p>
+
+        <p>The government committed to putting the carer perspective and lived experience at the heart of our mental health and wellbeing system, and this commitment must be honoured.</p>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<div class="spacer"></div>
-
 <script>
-window.addEventListener("scroll", function () {
+function handleTap(el) {
+  if (window.innerWidth <= 768) {
+    if (el.classList.contains("active")) {
+      const link = el.querySelector(".button");
+      window.location.href = link.href;
+      return;
+    }
 
-  const img2 = document.getElementById("img2");
-  const overlay = document.getElementById("overlay");
+    el.classList.add("active");
 
-  const scrollY = window.scrollY;
+    const front = el.querySelector(".front");
+    const back = el.querySelector(".back");
 
-  const fadeDistance = 1200; // slower fade
-  let progress = scrollY / fadeDistance;
-
-  // Delay start (≈ first 35%)
-  let raw = Math.min(Math.max((progress - 0.35) / 0.65, 0), 1);
-
-  // Ease-in-out
-  let eased = raw < 0.5
-    ? 2 * raw * raw
-    : 1 - Math.pow(-2 * raw + 2, 2) / 2;
-
-  img2.style.opacity = eased;
-  overlay.style.opacity = eased;
-
-  // Synced movement
-  overlay.style.transform = `translateY(${ -50 + (eased * -5) }%)`;
-
-});
+    front.style.opacity = 0;
+    back.style.opacity = 1;
+  }
+}
 </script>
 
 </body>
